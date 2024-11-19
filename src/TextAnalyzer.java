@@ -39,6 +39,7 @@ public class TextAnalyzer {
                 passages.add(p);
             }
         }
+        passages.sort(Comparator.comparing(Passage::getTitle));
 
         ArrayList<HashMap> similar = new ArrayList<>();
         System.out.println("Text (title)             | Similarities (%)\n" +
