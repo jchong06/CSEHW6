@@ -42,16 +42,23 @@ public class TextAnalyzer {
         passages.sort(Comparator.comparing(Passage::getTitle));
 
         ArrayList<HashMap> similar = new ArrayList<>();
+        int count = 0;
         System.out.println("Text (title)             | Similarities (%)\n" +
                 "--------------------------------------------------------------------------------");
         for (Passage pass : passages) {
+            count++;
             for (Passage p : passages) {
                 if (!pass.getTitle().equals(p.getTitle())) {
                     pass.setSimilarTitles(p.getTitle(), Passage.calculateSimilarity(pass, p));
                 }
             }
             similar.add(pass.getSimilarTitles(sim));
-            System.out.println(pass);
+            if (count == 5){
+                System.out.println(pass.toString().substring(0,pass.toString().length() - 80));
+            }
+            else {
+                System.out.println(pass);
+            }
         }
         System.out.println("Suspected Texts With Same Authors\n" +
                 "--------------------------------------------------------------------------------");
@@ -70,7 +77,7 @@ public class TextAnalyzer {
 
                     if (!printedPairs.contains(pair)) {
                         printedPairs.add(pair);
-                        System.out.printf("'%s' and '%s' may have the same author (%.0f%% similar)%n",
+                        System.out.printf("'%s' and '%s' may have the same author (%.0f%% similar).%n",
                                 title1, title2, similarityPercent);
                     }
                 }
