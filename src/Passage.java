@@ -203,6 +203,7 @@ public class Passage {
         String result =
                 title.replace(".txt", "") + " ".repeat(25 - (title.length() - 4)) + "| " + similar +
                         "\n--------------------------------------------------------------------------------";
+        result = result.substring(0, result.length()- 80);
         return result;
     }
 }
