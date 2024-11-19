@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * @author Justin Chong
+ * Email: justin.chong@stonybrook.edu
+ * Student ID: 116143020
+ * Recitation Number: CSE 214 R03
+ * TA: Kevin Zheng
  * The Passage class represents a text passage and provides functionality for parsing,
  * counting word frequencies, and calculating similarity with other passages.
  */
@@ -87,20 +92,18 @@ public class Passage {
     }
 
     /**
-     * * @author Justin Chong
-     *  * Email: justin.chong@stonybrook.edu
-     *  * Student ID: 116143020
-     *  * Recitation Number: CSE 214 R03
-     *  * TA: Kevin Zheng
      * Calculates the similarity between this passage and another passage using cosine similarity.
      *
-     * @param other the other passage to compare against
+     * @param p1 the first passage
+     * @param p2 the second passage to compare against
+     * @return the similarity score as a value between 0 and 1
      */
     public static double calculateSimilarity(Passage p1, Passage p2) {
         double dotProd = 0;
         double thisNorm = 0;
         double otherNorm = 0;
 
+        // Calculate dot product and norm for both passages
         for (String word : p1.words) {
             double thisFrequency = p1.getWordFrequency(word);
             double otherFrequency = p2.getWordFrequency(word);
@@ -110,15 +113,21 @@ public class Passage {
             thisNorm += thisFrequency * thisFrequency;
         }
 
-        for (String word : p2.words){
+        for (String word : p2.words) {
             double otherFrequency = p2.getWordFrequency(word);
             otherNorm += otherFrequency * otherFrequency;
         }
 
-        double similarity = dotProd / (Math.sqrt(thisNorm * otherNorm));
-        return similarity;
+        // Return the cosine similarity
+        return dotProd / (Math.sqrt(thisNorm * otherNorm));
     }
 
+    /**
+     * Adds a title and its similarity score to the map of similar titles.
+     *
+     * @param title     the title of the other passage
+     * @param similarity the similarity score between the passages
+     */
     public void setSimilarTitles(String title, Double similarity) {
         similarTitles.put(title, similarity);
     }
@@ -184,9 +193,9 @@ public class Passage {
         String similar = "";
         int count = 0;
 
+
         List<Map.Entry<String, Double>> sortedEntries = new ArrayList<>(similarTitles.entrySet());
         sortedEntries.sort(Comparator.comparing(Map.Entry::getKey));
-
         for (Map.Entry<String, Double> entry : sortedEntries) {
             count++;
             String title = entry.getKey().replace(".txt", "");
@@ -201,8 +210,8 @@ public class Passage {
         }
 
         String result =
-                title.replace(".txt", "") + " ".repeat(25 - (title.length() - 4)) + "| " + similar +
-                        "\n--------------------------------------------------------------------------------";
+                title.replace(".txt", "") + " ".repeat(25 - (title.length() - 4)) + "| " + similar;
+
         return result;
     }
 }

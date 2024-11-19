@@ -3,11 +3,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * * @author Justin Chong
- *  * Email: justin.chong@stonybrook.edu
- *  * Student ID: 116143020
- *  * Recitation Number: CSE 214 R03
- *  * TA: Kevin Zheng
+ * @author Justin Chong
+ * Email: justin.chong@stonybrook.edu
+ * Student ID: 116143020
+ * Recitation Number: CSE 214 R03
+ * TA: Kevin Zheng
  * The FrequencyTable class represents a table that tracks word frequencies across multiple passages.
  * It extends ArrayList to hold FrequencyList objects, which contain word frequencies for each passage.
  */

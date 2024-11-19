@@ -2,11 +2,11 @@ import java.io.File;
 import java.util.*;
 
 /**
- * * @author Justin Chong
- *  * Email: justin.chong@stonybrook.edu
- *  * Student ID: 116143020
- *  * Recitation Number: CSE 214 R03
- *  * TA: Kevin Zheng
+ * @author Justin Chong
+ * Email: justin.chong@stonybrook.edu
+ * Student ID: 116143020
+ * Recitation Number: CSE 214 R03
+ * TA: Kevin Zheng
  * The TextAnalyzer class compares text files in a specified directory, calculating the similarity
  * between each pair of passages and identifying potentially similar authors based on the text content.
  */

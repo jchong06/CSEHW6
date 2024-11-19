@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
- * * @author Justin Chong
- *  * Email: justin.chong@stonybrook.edu
- *  * Student ID: 116143020
- *  * Recitation Number: CSE 214 R03
- *  * TA: Kevin Zheng
+ * @author Justin Chong
+ * Email: justin.chong@stonybrook.edu
+ * Student ID: 116143020
+ * Recitation Number: CSE 214 R03
+ * TA: Kevin Zheng
  * The FrequencyList class tracks the frequency of a specific word across multiple passages.
  * It stores the frequencies and the passage indices where the word appears with a non-zero frequency.
  */
