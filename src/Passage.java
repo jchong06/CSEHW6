@@ -2,10 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The Passage class represents a text passage and provides functionality for parsing,
@@ -186,7 +183,11 @@ public class Passage {
     public String toString() {
         String similar = "";
         int count = 0;
-        for (Map.Entry<String, Double> entry : similarTitles.entrySet()) {
+
+        List<Map.Entry<String, Double>> sortedEntries = new ArrayList<>(similarTitles.entrySet());
+        sortedEntries.sort(Comparator.comparing(Map.Entry::getKey));
+
+        for (Map.Entry<String, Double> entry : sortedEntries) {
             count++;
             String title = entry.getKey().replace(".txt", "");
             double similarity = entry.getValue() * 100;
@@ -198,6 +199,7 @@ public class Passage {
         if (!similar.isEmpty()) {
             similar = similar.substring(0, similar.length() - 2);
         }
+
         String result =
                 title.replace(".txt", "") + " ".repeat(25 - (title.length() - 4)) + "| " + similar +
                         "\n--------------------------------------------------------------------------------";
