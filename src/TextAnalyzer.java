@@ -49,7 +49,7 @@ public class TextAnalyzer {
         for (Passage pass : passages) {
             for (Passage p : passages) {
                 if (!pass.getTitle().equals(p.getTitle())) {
-                    pass.calculateSimilarity(p);
+                    pass.setSimilarTitles(p.getTitle(), Passage.calculateSimilarity(pass, p));
                 }
             }
             similar.add(pass.getSimilarTitles(sim));

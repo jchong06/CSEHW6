@@ -43,6 +43,7 @@ public class Passage {
      * @param file the file to be parsed
      */
     public void parseFile(File file) {
+        loadStopWords();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -85,7 +86,7 @@ public class Passage {
      * @return the frequency of the word as a proportion of the total word count
      */
     public double getWordFrequency(String word) {
-        return frequencyLists.containsKey(word) ? (double) frequencyLists.get(word) / wordCount : 0;
+        return frequencyLists.containsKey(word) ? (double) frequencyLists.get(word) : 0;
     }
 
     /**
@@ -98,23 +99,27 @@ public class Passage {
      *
      * @param other the other passage to compare against
      */
-    public void calculateSimilarity(Passage other) {
-        Set<String> allWords = new HashSet<>(this.words);
-        allWords.addAll(other.words);
-        double numerator = 0;
-        double denominator1 = 0;
-        double denominator2 = 0;
+    public static double calculateSimilarity(Passage p1, Passage p2) {
+        double dotProd = 0;
+        double thisNorm = 0;
+        double otherNorm = 0;
 
-        for (String word : allWords) {
-            double thisFrequency = getWordFrequency(word);
-            double otherFrequency = other.getWordFrequency(word);
-            numerator += thisFrequency * otherFrequency;
-            denominator1 += Math.pow(thisFrequency, 2);
-            denominator2 += Math.pow(otherFrequency, 2);
+        for (String word : p1.words) {
+            double thisFrequency = p1.getWordFrequency(word);
+            double otherFrequency = p2.getWordFrequency(word);
+            if (p2.words.contains(word)) {
+                dotProd += thisFrequency * otherFrequency;
+            }
+            thisNorm += thisFrequency * thisFrequency;
+            otherNorm += otherFrequency * otherFrequency;
         }
 
-        double similarity = numerator / (Math.sqrt(denominator1) * Math.sqrt(denominator2));
-        similarTitles.put(other.title, similarity);
+        double similarity = dotProd / Math.sqrt(thisNorm) / Math.sqrt(otherNorm);
+        return similarity;
+    }
+
+    public void setSimilarTitles(String title, Double similarity) {
+        similarTitles.put(title, similarity);
     }
 
     /**
