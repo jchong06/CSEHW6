@@ -111,10 +111,14 @@ public class Passage {
                 dotProd += thisFrequency * otherFrequency;
             }
             thisNorm += thisFrequency * thisFrequency;
+        }
+
+        for (String word : p2.words){
+            double otherFrequency = p2.getWordFrequency(word);
             otherNorm += otherFrequency * otherFrequency;
         }
 
-        double similarity = dotProd / Math.sqrt(thisNorm) / Math.sqrt(otherNorm);
+        double similarity = dotProd / (Math.sqrt(thisNorm * otherNorm));
         return similarity;
     }
 
