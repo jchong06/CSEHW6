@@ -69,16 +69,20 @@ public class TextAnalyzer {
             if (similarities != null && !similarities.isEmpty()) {
                 for (Map.Entry<String, Double> entry : similarities.entrySet()) {
                     String otherTitle = entry.getKey();
-                    double similarityPercent = entry.getValue() * 100;
-
-                    String title1 = passages.get(i).getTitle().replace(".txt", "");
-                    String title2 = otherTitle.replace(".txt", "");
-                    String pair = title1.compareTo(title2) < 0 ? title1 + "-" + title2 : title2 + "-" + title1;
+                    double percent = entry.getValue() * 100;
+                    String t1 = passages.get(i).getTitle().replace(".txt", "");
+                    String t2 = otherTitle.replace(".txt", "");
+                    String pair;
+                    if (t1.compareTo(t2) < 0) {
+                        pair = t1 + "-" + t2;
+                    } else {
+                        pair = t2 + "-" + t1;
+                    }
 
                     if (!printedPairs.contains(pair)) {
                         printedPairs.add(pair);
                         System.out.printf("'%s' and '%s' may have the same author (%.0f%% similar).%n",
-                                title1, title2, similarityPercent);
+                                t1, t2, percent);
                     }
                 }
             }
