@@ -1,8 +1,5 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * * @author Justin Chong
@@ -57,18 +54,27 @@ public class TextAnalyzer {
         }
         System.out.println("Suspected Texts With Same Authors\n" +
                 "--------------------------------------------------------------------------------");
+        Set<String> printedPairs = new HashSet<>();
+
         for (int i = 0; i < similar.size(); i++) {
             HashMap<String, Double> similarities = similar.get(i);
             if (similarities != null && !similarities.isEmpty()) {
                 for (Map.Entry<String, Double> entry : similarities.entrySet()) {
                     String otherTitle = entry.getKey();
                     double similarityPercent = entry.getValue() * 100;
-                    System.out.printf("'%s' and '%s' may have the same author (%.0f%% similar)%n",
-                            passages.get(i).getTitle().replace(".txt", ""),
-                            otherTitle.replace(".txt", ""),
-                            similarityPercent);
+
+                    String title1 = passages.get(i).getTitle().replace(".txt", "");
+                    String title2 = otherTitle.replace(".txt", "");
+                    String pair = title1.compareTo(title2) < 0 ? title1 + "-" + title2 : title2 + "-" + title1;
+
+                    if (!printedPairs.contains(pair)) {
+                        printedPairs.add(pair);
+                        System.out.printf("'%s' and '%s' may have the same author (%.0f%% similar)%n",
+                                title1, title2, similarityPercent);
+                    }
                 }
             }
         }
+
     }
 }
